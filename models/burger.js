@@ -1,30 +1,19 @@
-var orm = require('../config/orm.js');
+var Sequelize = require("sequelize");
+var sequelize = require("../config/connection");
 
-//create burger variable for the controller
-var burger = {
+//mimic whats in the database
 
-    //selectAll for all the burgers
-    all: function(cb){
-        orm.all('burgers', function(res){
-            cb(res);
-        });
-    },
+var db = sequelize.define("burgers",
+{
+    burger_name: Sequelize.STRING,
+    devoured: Sequelize.BOOLEAN
+  },
+  { 
+      freezeTableName: true,
+    timestamps: false
+  });
 
-    //insertOne for adding burgers
-    create: function(cols, vals, cb) {
-        orm.create('burgers', cols, vals, function(res){
-            cb(res);
-        });
-    },
+  db.sync();
 
-    //update burger status
-    update: function(objColVals, condition, cb){
-        orm.update('burgers', objColVals, condition, function(res) {
-            cb(res);
-        });
-    }
-};
-
-//export burger back to the controller
-module.exports = burger;
+  module.exports = db;
 

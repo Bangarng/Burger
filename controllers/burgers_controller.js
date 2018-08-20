@@ -2,34 +2,78 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models/burger.js");
 
-//add endpoint taht gets all burgers from the DB
-//then render the index file by passing in all the burgers as an object for handlebars to use
-router.get("/", function(req, res){
-    db.all(function(data) {
-        var allBurgers = {burgers: data};
-        console.log(allBurgers);
-        res.render('index', allBurgers);
-    });
-});    
 
-//add a burger with the insertOne Endpoint that posts
-//the burger name and a boolean value of false for the devoured column
-//then redirect back to the /index route
-router.post('/burgers/create', function(req, res) {
-    db.create(['burger_name', 'devoured'], [req.body.name, false], function() {
-        res.redirect('/');
-    });
+router.get("/create", function(req,res){
+    res.render("create", {});
 });
 
-//adds a /burgers/updateOne/:id route that
-//updates the burger from being uneaten to devoured, 
-//then redirect it to the /index endpoint/homepage
-router.put('/burgers/update/:id', function(req, res){
-    var condition = 'id = ' + req.params.id;
-    console.log("The condition of the burger is ", condition);
-    db.update({devoured: req.body.devoured}, condition, function() {
-        res.redirect('/');
+router.get("/", function(req, res){
+
+    db.findAll({}).then(function(results) {
+        // results are available to us inside the .then
+       // console.log(results);
+        res.render("index", {quotes: results}); 
     });
+
+});
+
+router.put("/updatepost/:id", function(req, res){
+
+   console.log("author :" + req.body.author);
+   console.log("quote:" + req.body.quote);
+   console.log("id :" + req.params.id);
+    //sequelize will update data using client information passed to it
+    db.update(
+        {
+            author: req.body.author,
+            quote: req.body.quote
+        },{
+        where: {
+            id : req.params.id
+        }
+
+        }
+    ).then(function(db){
+        res.json(db);
+    });
+
+});
+
+router.get("/update/:id", function(req, res){
+
+    db.findOne({
+        where: {id: req.params.id}
+    }).then(function(result){
+        console.log(result);
+        res.render("quotes", {updatequote: result});
+
+    });
+
+   
+})
+
+
+router.delete("/api/delete/:id", function(req, res){
+
+    console.log("Trying to delete" + req.params.id);
+
+    //talk to sequelize to delete the record
+
+    db.destroy({
+        where: {
+            id: req.params.id
+        }
+    }
+
+    ).then(function(dbQuote){
+
+        console.log(dbQuote);
+        res.json(dbQuote);
+    }
+
+    )
+
+   
 });
 
 module.exports = router;

@@ -1,28 +1,38 @@
-//requiring our NPM items
-var express = require("express");
-var bodyParser = require("body-parser");
-var exphbs = require("express-handlebars");
+//Dependencies
+var express = require('express');
+//var methodOverride = require('method-override');
+var bodyParser = require('body-parser');
 
-//default syntax for express
+// Create an instance of the express app.
 var app = express();
 
-var orm = require("./config/orm");
+// set port to 3000 or whatever heroku (deployment site) sets it to
+var PORT = process.env.PORT || 3000;
 
-//grabbing our controllers 
-var controller = require("./controllers/burgers_controller");
+// express middleware needed for serving static files. For more details
+// see here: http://expressjs.com/en/starter/static-files.html
+app.use(express.static(__dirname + '/public'));
 
-var PORT = process.env.PORT || 2747;
-
-app.use(express.static("public"));
-
-app.use(bodyParser.urlencoded({extended: true}));
+/// bodyparsers 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/*+json' }));
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
+app.use(bodyParser.text({ type: 'text/html' }));
 
-app.engine("handlebars", exphbs({defaultLayout: "main"}));
+// override with POST having ?_method=DELETE or PUT
+//app.use(methodOverride('_method'));
+
+// Set Handlebars as the default templating engine.
+var exphbs = require('express-handlebars');
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-app.use(controller);
+// now import the routes
+var routes = require('./controllers/burgers_controller.js');
+app.use('/', routes);
 
-app.listen(PORT, function(){
-    console.log("Started our server and listening on PORT " + PORT + " (BRGR)");
-})
+// Initiate the listener.
+app.listen(PORT, function() {
+  console.log("App listening on PORT " + PORT);
+});
