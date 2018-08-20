@@ -2,4 +2,4 @@ INSERT INTO burgers (burger_name) VALUE ("SWEET & Spicy Queso Blanco Bacon Burge
 
 INSERT INTO burgers (burger_name) VALUE ("Avacado Feta BLT Pepper Burger");
 
-INSERT INTO burgers (burger_name) VALUE ("Tomato Cheese Ketchup Burger with no tomato, cheese, or ketchup");
+INSERT INTO burgers (burger_name) VALUE ("Tomato Cheese Ketchup Burger no tomato, cheese, or ketchup");

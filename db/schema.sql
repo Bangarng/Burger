@@ -11,3 +11,4 @@ CREATE TABLE burgers
     devoured BOOLEAN default false,
     PRIMARY KEY (id)
 );
+
