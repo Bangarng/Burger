@@ -1,22 +1,20 @@
-//Setting up our MySQL connection.
+// Set up MySQL connection.
 var mysql = require("mysql");
 
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "NotAnother1",
-  database: "burgers_db"
-});
-var del = connection._protocol._delegateError;
-connection._protocol._delegateError = function(err, sequence){
-  if (err.fatal) {
-    console.trace('fatal error: ' + err.message);
-  }
-  return del.call(this, err, sequence);
-};
+if(process.env.JAWSDB_URL){
+  connection = mysql.createConnection(process.env.JAWSDB_URL);
+}
+else{
+    var connection = mysql.createConnection({
+    port: 3306,
+    host: "localhost",
+    user: "root",
+    password: "NotAnother1",
+    database: "burgers_db"
+  });
+}
 
-//Making our connection.
+// Make connection.
 connection.connect(function(err) {
   if (err) {
     console.error("error connecting: " + err.stack);
@@ -25,5 +23,5 @@ connection.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 
-//Exporting our connection for ORM.
+// Export connection for our ORM to use.
 module.exports = connection;
