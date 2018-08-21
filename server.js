@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 //Create an instance of the express app.
 var app = express();
 
-var PORT = process.env.PORT || 2747;
+var PORT = process.env.PORT || 3000;
 
 //Express middleware needed for serving static files. For more details
 //See here: http://expressjs.com/en/starter/static-files.html
@@ -35,5 +35,5 @@ app.use('/', routes);
 
 //Initiate the listener.
 app.listen(PORT, function() {
-  console.log("App listening on PORT " + PORT + " (BRGR)");
+  console.log("App listening on PORT " + PORT);
 });
