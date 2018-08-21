@@ -1,17 +1,22 @@
-//connecting to our database using sequelize (ORM jQuery)
-var sequelize = require("sequelize");
+//Setting up our MySQL connection.
+var mysql = require("mysql");
 
-var sequelize = new sequelize("burgers_db", "root", "NotAnother1",{
-    host: "localhost",
-    port: 3306,
-    dialect: "mysql",
-    
-        pool:{
-            max: 5,
-            min: 0,
-            idle: 10000
-        }
-
+var connection = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "NotAnother1",
+  database: "burgers_db"
 });
 
-module.exports = sequelize;
+//Making our connection.
+connection.connect(function(err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
+
+//Exporting our connection for ORM.
+module.exports = connection;

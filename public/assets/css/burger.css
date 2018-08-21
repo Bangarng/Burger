@@ -1,3 +1,6 @@
+/* Importing Baloo Bai from Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhai|Ubuntu');
+
 body {
     background-color: #ECB733;
     text-align: center;
@@ -5,4 +8,50 @@ body {
 
 img {
     width: 250px;
+    margin-top: 2%;
 }
+
+.header {
+    color: #E50606;
+    font-size: 4em;
+    font-family: 'Baloo Bhai', cursive;
+    margin-top: -.5%;
+}
+
+.uneaten, .eaten {
+    font-family: 'Baloo Bhai', cursive;
+    font-size: 2.5em;
+}
+
+.uneaten-burgers {
+    background-color: white;
+    border-radius: 5px;
+    min-height: 50px;
+    line-height: 50px;
+    font-size: 1.5em;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+}
+
+.eaten-burgers {
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    min-height: 50px;
+    line-height: 50px;
+    font-size: 1.5em;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+}
+
+button {
+    font-size: 1.5em !important;
+    font-family: 'Ubuntu', sans-serif;
+    margin-top:10px;
+}
+
+textarea {
+    width: 500px;
+    height: 125px;
+    font-size:2.2em;
+    border-radius: 5px;
+  }
